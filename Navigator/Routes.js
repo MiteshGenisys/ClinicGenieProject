@@ -4,7 +4,8 @@ import {Router, Stack, Scene} from 'react-native-router-flux';
 import Login from '../Screen/Login';
 import RequestRegistration from '../Screen/RequestRegistration';
 import ForgotPassword from '../Screen/ForgotPassword';
-import PersonList from '../Components/PersonList';
+import Dashboard from '../Screen/Dashboard';
+import Patientlist from '../Screen/Patientlist';
 
 export default class Routes extends Component<{}> {
   render() {
@@ -17,7 +18,13 @@ export default class Routes extends Component<{}> {
             component={RequestRegistration}
             title="Register"
           />
-          <Scene key="forgot" component={PersonList} title="forgot" />
+          <Scene key="forgot" component={ForgotPassword} title="forgot" />
+          <Scene key="dasbord" component={Dashboard} title="dasbord" />
+          <Scene
+            key="patientlist"
+            component={Patientlist}
+            title="Patientlist"
+          />
         </Stack>
       </Router>
     );
