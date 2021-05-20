@@ -1,54 +1,33 @@
 import React, {Component} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  Button,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import data from '../data/data';
+import Patient from '../Screen/Patient';
 
-import {auth_patient} from '../Services/AuthService';
+class Patientlist extends React.Component {
+  state = {
+    data: data,
+  };
 
-class Patientlist extends Component {
-  onsubmmit = () => {
-    auth_patient()
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  patientlist = () => {
+    return this.state.data.map(data => {
+      return <Patient detail={data} key={data.id} />;
+    });
   };
 
   render() {
     return (
-      <View style={styles.forgotContainer}>
-        <TouchableOpacity style={styles.button} onPress={this.onsubmmit}>
-          <Text style={styles.text}>Get patient delais</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView
+        style={styles.patientContainer}
+        showsVerticalScrollIndicator={false}>
+        {this.patientlist()}
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  forgotContainer: {
+  patientContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  button: {
-    backgroundColor: 'blue',
-    width: '80%',
-    height: 50,
-    borderRadius: 5,
-  },
-  text: {
-    color: 'white',
-    paddingTop: 10,
-    textAlign: 'center',
   },
 });
 

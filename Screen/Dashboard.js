@@ -2,61 +2,44 @@ import * as React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Actions} from 'react-native-router-flux';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Patientlist from '../Screen/Patientlist';
 import CapsulesIcon from 'react-native-vector-icons/FontAwesome5';
 import MedicineboxIcon from 'react-native-vector-icons/AntDesign';
+import FileMedical from 'react-native-vector-icons/FontAwesome5';
 
-function Dashboard() {
+function Dasbord() {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Dashboard!</Text>
+      <Text>Dasbord!</Text>
     </View>
   );
 }
 
-function SettingsScreen() {
+function Consulations() {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>SettingsScreen!</Text>
-    </View>
-  );
-}
-
-function Counsultations() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Counsultations!</Text>
+      <Text>Consulations!</Text>
     </View>
   );
 }
 
 class More extends React.Component {
-  patientlist() {
-    Actions.patientlist();
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.iconLable}>
-          <TouchableOpacity
-            style={styles.patientlable}
-            onPress={this.patientlist}>
-            <FontAwesome style={styles.Icon} name="bed" />
-            <Text style={styles.LablePatient}>Patient</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.iconLable}>
           <CapsulesIcon name="capsules" style={styles.Icon} />
           <Text style={styles.lable}>Drugs and doses</Text>
         </View>
+        <View style={styles.iconLable}>
+          <TouchableOpacity style={styles.patientlable}>
+            <FileMedical style={styles.Icon} name="file-medical" />
+            <Text style={styles.LablePatient}>Prescriptions</Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.iconLable}>
           <MedicineboxIcon style={styles.Icon} name="medicinebox" />
           <Text style={styles.lable}>Pharmacies</Text>
@@ -66,31 +49,42 @@ class More extends React.Component {
   }
 }
 
-function Patient() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Patient!</Text>
-    </View>
-  );
-}
-
-function DrugsDoses() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Drugs and doses!</Text>
-    </View>
-  );
-}
-
-function Pharmacies() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Pharmacies!</Text>
-    </View>
-  );
-}
-
 const Tab = createBottomTabNavigator();
+
+export default function Dashboard() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+
+            if (route.name === 'Dasbord') {
+              iconName = focused ? 'home' : 'home';
+            } else if (route.name === 'Pationts') {
+              iconName = focused ? 'bed' : 'bed';
+            } else if (route.name === 'Consulations') {
+              iconName = focused ? 'stethoscope' : 'stethoscope';
+            } else if (route.name === 'More') {
+              iconName = focused ? 'ellipsis-h' : 'ellipsis-h';
+            }
+
+            // You can return any component that you like here!
+            return <FontAwesome name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'blue',
+          inactiveTintColor: 'gray',
+        }}>
+        <Tab.Screen name="Dasbord" component={Dasbord} />
+        <Tab.Screen name="Pationts" component={Patientlist} />
+        <Tab.Screen name="Consulations" component={Consulations} />
+        <Tab.Screen name="More" component={More} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -117,92 +111,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  patientlable: {
+    flexDirection: 'row',
+  },
   Icon: {
     fontSize: 20,
     justifyContent: 'flex-start',
   },
-  lable: {
-    padding: 15,
-  },
-  patientlable: {
-    flexDirection: 'row',
-  },
   LablePatient: {
     paddingLeft: 15,
   },
+  lable: {
+    padding: 15,
+  },
 });
-
-export default function mainDashboard() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen key="dasbord" name="Dasboard" component={Dashboard} />
-        <Tab.Screen name="SettingsScreen" component={SettingsScreen} />
-        <Tab.Screen
-          key="Counsultations"
-          name="Counsultations"
-          component={Counsultations}
-        />
-        <Tab.Screen name="More" component={More} />
-        {/* <Tab.Screen key="Patient" name="Patient" component={Patient} />
-        <Tab.Screen name="DrugsDoses" component={DrugsDoses} />
-        <Tab.Screen name="Pharmacies" component={Pharmacies} /> */}
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-}
-
-// import * as React from 'react';
-// import {Text, View} from 'react-native';
-// import {NavigationContainer} from '@react-navigation/native';
-// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-
-// function HomeScreen() {
-//   return (
-//     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//       <Text>Home!</Text>
-//     </View>
-//   );
-// }
-
-// function SettingsScreen() {
-//   return (
-//     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//       <Text>Settings!</Text>
-//     </View>
-//   );
-// }
-
-// const Tab = createBottomTabNavigator();
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <Tab.Navigator
-//         screenOptions={({route}) => ({
-//           tabBarIcon: ({focused, color, size}) => {
-//             let iconName;
-
-//             if (route.name === 'Home') {
-//               iconName = focused
-//                 ? 'ios-information-circle'
-//                 : 'ios-information-circle-outline';
-//             } else if (route.name === 'Settings') {
-//               iconName = focused ? 'ios-list-box' : 'ios-list';
-//             }
-
-//             // You can return any component that you like here!
-//             return <Ionicons name={iconName} size={size} color={color} />;
-//           },
-//         })}
-//         tabBarOptions={{
-//           activeTintColor: 'tomato',
-//           inactiveTintColor: 'gray',
-//         }}>
-//         <Tab.Screen name="Home" component={HomeScreen} />
-//         <Tab.Screen name="Settings" component={SettingsScreen} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//   );
-// }

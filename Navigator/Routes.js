@@ -4,8 +4,8 @@ import {Router, Stack, Scene} from 'react-native-router-flux';
 import Login from '../Screen/Login';
 import RequestRegistration from '../Screen/RequestRegistration';
 import ForgotPassword from '../Screen/ForgotPassword';
-import Dashboard from '../Screen/Dashboard';
 import Patientlist from '../Screen/Patientlist';
+import Dashboard from '../Screen/Dashboard';
 
 export default class Routes extends Component<{}> {
   render() {
