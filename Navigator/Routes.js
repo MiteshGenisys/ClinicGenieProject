@@ -10,7 +10,7 @@ import Dashboard from '../Screen/Dashboard';
 export default class Routes extends Component<{}> {
   render() {
     return (
-      <Router>
+      <Router headerMode="none">
         <Stack key="root" hideNavBar={true}>
           <Scene key="login" component={Login} title="Login" initial={true} />
           <Scene
