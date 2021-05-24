@@ -7,7 +7,7 @@ export default data = [
     contact: '+7841524174',
     age: '21yaers',
     gender: 'Male',
-    lastconsult: 'Last Counsult: 1 May, 2021',
+    lastconsult: 'Last Counsult: 1 May, 2021'
   },
   {
     id: 2,

@@ -19,11 +19,12 @@ const axiosdata = {
     return axios.get(DevURL + url);
   },
 
-  getWithParamToken: (url, params) => {
+  getWithParamToken: async (url, params) => {
+    const Token = await AsyncStorage.getItem('token');
     return axios({
       method: 'get',
       headers: {
-        Authorization: AsyncStorage.getItem(res.data.token),
+        Authorization: Token,
       },
       params,
       url: DevURL + url,

@@ -55,7 +55,6 @@ class Login extends Component {
         console.log(res);
         // console.log(res.data.token); // token path
         AsyncStorage.setItem('token', res.data.token); // stored token in local storage
-        AsyncStorage.setItem('credentials', res.config.data);
 
         const Token = AsyncStorage.getItem('token'); // get token from local storage
         if (Token !== null) {
@@ -111,15 +110,22 @@ class Login extends Component {
                     value={values.email}
                     keyboardType="email-address"
                   />
-                  {errors.email && touched.email ? (
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        color: 'red',
-                      }}>
-                      {errors.email}
-                    </Text>
-                  ) : null}
+                  <View
+                    style={{
+                      flex: 1,
+                      width: '100%',
+                      marginLeft: 85,
+                    }}>
+                    {errors.email && touched.email ? (
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: 'red',
+                        }}>
+                        {errors.email}
+                      </Text>
+                    ) : null}
+                  </View>
                   <TextInput
                     name="password"
                     placeholder="Password"
@@ -129,16 +135,22 @@ class Login extends Component {
                     value={values.password}
                     secureTextEntry
                   />
-                  {errors.password && touched.password ? (
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        color: 'red',
-                      }}>
-                      {errors.password}
-                    </Text>
-                  ) : null}
-
+                  <View
+                    style={{
+                      flex: 1,
+                      width: '100%',
+                      marginLeft: 85,
+                    }}>
+                    {errors.password && touched.password ? (
+                      <Text
+                        style={{
+                          fontSize: 10,
+                          color: 'red',
+                        }}>
+                        {errors.password}
+                      </Text>
+                    ) : null}
+                  </View>
                   <View style={styles.linkview}>
                     <View style={styles.signupTextCont}>
                       <TouchableOpacity onPress={this.request_registration}>

@@ -92,40 +92,52 @@ class RequestRegistration extends Component {
                   }) => (
                     <>
                       <View style={styles.emailPasswors}>
-                        <TextInput
-                          name="first_name"
-                          style={styles.textInputFirstLast}
-                          placeholder="First name"
-                          onChangeText={handleChange('first_name')}
-                          onBlur={handleBlur('first_name')}
-                          value={values.first_name}
-                        />
-                        <View
-                          style={{
-                            justifyContent: 'flex-end',
-                            alignItems: 'flex-end',
-                            alignContent: 'flex-end',
-                          }}>
-                          {errors.first_name && touched.first_name ? (
-                            <Text style={{fontSize: 10, color: 'red'}}>
-                              {errors.first_name}
-                            </Text>
-                          ) : null}
-                        </View>
-                        <TextInput
-                          name="last_name"
-                          style={styles.textInputFirstLast}
-                          placeholder="Last name"
-                          onChangeText={handleChange('last_name')}
-                          onBlur={handleBlur('last_name')}
-                          value={values.last_name}
-                        />
-                        <View>
-                          {errors.last_name && touched.last_name ? (
-                            <Text style={{fontSize: 10, color: 'red'}}>
-                              {errors.last_name}
-                            </Text>
-                          ) : null}
+                        <View style={{flex: 2, flexDirection: 'column'}}>
+                          <View style={styles.firstname}>
+                            <TextInput
+                              name="first_name"
+                              style={styles.textInputFirstLast}
+                              placeholder="First name"
+                              onChangeText={handleChange('first_name')}
+                              onBlur={handleBlur('first_name')}
+                              value={values.first_name}
+                            />
+                            <TextInput
+                              name="last_name"
+                              style={styles.textInputFirstLast}
+                              placeholder="Last name"
+                              onChangeText={handleChange('last_name')}
+                              onBlur={handleBlur('last_name')}
+                              value={values.last_name}
+                            />
+                          </View>
+                          <View style={{flex: 2, flexDirection: 'row'}}>
+                            <View
+                              style={{
+                                justifyContent: 'flex-end',
+                                alignItems: 'flex-end',
+                                alignContent: 'flex-end',
+                              }}>
+                              {errors.first_name && touched.first_name ? (
+                                <Text
+                                  style={{
+                                    fontSize: 10,
+                                    color: 'red',
+                                    marginRight: 70,
+                                    marginLeft: 1,
+                                  }}>
+                                  {errors.first_name}
+                                </Text>
+                              ) : null}
+                            </View>
+                            <View>
+                              {errors.last_name && touched.last_name ? (
+                                <Text style={{fontSize: 10, color: 'red'}}>
+                                  {errors.last_name}
+                                </Text>
+                              ) : null}
+                            </View>
+                          </View>
                         </View>
                       </View>
                       <View style={styles.emailContainer}>
@@ -195,67 +207,91 @@ class RequestRegistration extends Component {
                         ) : null}
                       </View>
                       <View style={styles.emailPasswors}>
-                        <TextInput
-                          name="city"
-                          style={styles.textInputFirstLast}
-                          placeholder="Enter your city"
-                          onChangeText={handleChange('city')}
-                          onBlur={handleBlur('city')}
-                          value={values.city}
-                        />
-                        <View>
-                          {errors.city && touched.city ? (
-                            <Text style={{fontSize: 10, color: 'red'}}>
-                              {errors.city}
-                            </Text>
-                          ) : null}
-                        </View>
-                        <TextInput
-                          name="state"
-                          style={styles.textInputFirstLast}
-                          placeholder="Enter your state"
-                          onChangeText={handleChange('state')}
-                          onBlur={handleBlur('state')}
-                          value={values.state}
-                        />
-                        <View>
-                          {errors.state && touched.state ? (
-                            <Text style={{fontSize: 10, color: 'red'}}>
-                              {errors.state}
-                            </Text>
-                          ) : null}
+                        <View style={{flex: 2, flexDirection: 'column'}}>
+                          <View style={{flex: 2, flexDirection: 'row'}}>
+                            <TextInput
+                              name="city"
+                              style={styles.textInputFirstLast}
+                              placeholder="Enter your city"
+                              onChangeText={handleChange('city')}
+                              onBlur={handleBlur('city')}
+                              value={values.city}
+                            />
+                            <TextInput
+                              name="state"
+                              style={styles.textInputFirstLast}
+                              placeholder="Enter your state"
+                              onChangeText={handleChange('state')}
+                              onBlur={handleBlur('state')}
+                              value={values.state}
+                            />
+                          </View>
+                          <View style={{flex: 2, flexDirection: 'row'}}>
+                            <View>
+                              {errors.city && touched.city ? (
+                                <Text
+                                  style={{
+                                    fontSize: 10,
+                                    color: 'red',
+                                    marginRight: 70,
+                                    marginLeft: 1,
+                                  }}>
+                                  {errors.city}
+                                </Text>
+                              ) : null}
+                            </View>
+                            <View>
+                              {errors.state && touched.state ? (
+                                <Text style={{fontSize: 10, color: 'red'}}>
+                                  {errors.state}
+                                </Text>
+                              ) : null}
+                            </View>
+                          </View>
                         </View>
                       </View>
                       <View style={styles.emailPasswors}>
-                        <TextInput
-                          name="country"
-                          style={styles.textInputFirstLast}
-                          placeholder="Enter your Country"
-                          onChangeText={handleChange('country')}
-                          onBlur={handleBlur('country')}
-                          value={values.country}
-                        />
-                        <View>
-                          {errors.country && touched.country ? (
-                            <Text style={{fontSize: 10, color: 'red'}}>
-                              {errors.country}
-                            </Text>
-                          ) : null}
-                        </View>
-                        <TextInput
-                          name="pincode"
-                          style={styles.textInputFirstLast}
-                          placeholder="Enter your pincode"
-                          onChangeText={handleChange('pincode')}
-                          onBlur={handleBlur('pincode')}
-                          value={values.pincode}
-                        />
-                        <View>
-                          {errors.pincode && touched.pincode ? (
-                            <Text style={{fontSize: 10, color: 'red'}}>
-                              {errors.pincode}
-                            </Text>
-                          ) : null}
+                        <View style={{flex: 2, flexDirection: 'column'}}>
+                          <View style={{flex: 2, flexDirection: 'row'}}>
+                            <TextInput
+                              name="country"
+                              style={styles.textInputFirstLast}
+                              placeholder="Enter your Country"
+                              onChangeText={handleChange('country')}
+                              onBlur={handleBlur('country')}
+                              value={values.country}
+                            />
+                            <TextInput
+                              name="pincode"
+                              style={styles.textInputFirstLast}
+                              placeholder="Enter your pincode"
+                              onChangeText={handleChange('pincode')}
+                              onBlur={handleBlur('pincode')}
+                              value={values.pincode}
+                            />
+                          </View>
+                          <View style={{flex: 2, flexDirection: 'row'}}>
+                            <View>
+                              {errors.country && touched.country ? (
+                                <Text
+                                  style={{
+                                    fontSize: 10,
+                                    color: 'red',
+                                    marginRight: 70,
+                                    marginLeft: 1,
+                                  }}>
+                                  {errors.country}
+                                </Text>
+                              ) : null}
+                            </View>
+                            <View>
+                              {errors.pincode && touched.pincode ? (
+                                <Text style={{fontSize: 10, color: 'red'}}>
+                                  {errors.pincode}
+                                </Text>
+                              ) : null}
+                            </View>
+                          </View>
                         </View>
                       </View>
 
@@ -302,9 +338,10 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingLeft: 13,
     width: '49%',
+    marginLeft: 3,
     backgroundColor: Color.textInput,
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 5,
   },
   textInput: {
     marginTop: 40,
@@ -328,19 +365,57 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  textInputFirstLast: {
-    marginTop: 40,
-    padding: 12,
-    paddingLeft: 13,
-    width: '49%',
-    backgroundColor: Color.textInput,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
+  // textInputFirstLast: {
+  //   marginTop: 40,
+  //   padding: 12,
+  //   paddingLeft: 13,
+  //   width: '49%',
+  //   backgroundColor: Color.textInput,
+  //   alignItems: 'center',
+  //   borderRadius: 5,
+  // },
   registrationButton: {
     marginTop: 40,
     marginBottom: 15,
   },
+  firstname: {
+    flex: 2,
+    flexDirection: 'row',
+    borderRadius: 15,
+  },
 });
 
 export default RequestRegistration;
+
+// import React, {Component} from 'react';
+// import {
+//   View,
+//   StyleSheet,
+//   ScrollView,
+//   TextInput,
+//   Button,
+//   Text,
+// } from 'react-native';
+
+// class RequestRegistration extends Component {
+//   render() {
+//     return (
+{
+  /* <View style={{flex: 2, flexDirection: 'column'}}>
+    <View style={{flex: 2, flexDirection: 'row'}}>
+      <View style={{flex: 2, backgroundColor: 'powderblue'}} />
+      <View style={{flex: 2, backgroundColor: 'skyblue'}} />
+    </View>
+    <View style={{flex: 2, flexDirection: 'row'}}>
+      <View style={{flex: 2, backgroundColor: 'blue'}} />
+      <View style={{flex: 2, backgroundColor: 'red'}} />
+    </View>
+  </View> */
+}
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({});
+
+// export default RequestRegistration;

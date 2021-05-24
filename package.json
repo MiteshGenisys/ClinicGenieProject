@@ -35,6 +35,8 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-ionicons": "^4.6.5",
     "react-native-navigation-bar": "^0.2.1",
+    "react-native-paged-scroll-view": "^2.0.4",
+    "react-native-pagination": "^1.5.5",
     "react-native-paper": "^4.8.1",
     "react-native-popup-menu": "^0.15.10",
     "react-native-reanimated": "^2.1.0",

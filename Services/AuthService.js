@@ -1,5 +1,6 @@
 import {date} from 'yup/lib/locale';
 import api from '../Url/Axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const auth_login = body => {
   return new Promise(async (resolve, reject) => {
@@ -40,11 +41,11 @@ export const auth_forgot = email => {
   });
 };
 
-export const auth_patient = () => {
+export const get_patientdetails = () => {
   return new Promise(async (resolve, reject) => {
     return api
-      .post(
-        `/patients?fromDate=2018-01-01&toDate=2022-05-05&search=b&page=1&limit=5`,
+      .getWithParamToken(
+        `/patients?fromDate=2015-01-01&toDate=2022-05-05&search=&page=1&limit=10`,
       )
       .then(res => {
         resolve(res);

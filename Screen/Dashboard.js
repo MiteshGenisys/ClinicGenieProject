@@ -9,6 +9,8 @@ import CapsulesIcon from 'react-native-vector-icons/FontAwesome5';
 import MedicineboxIcon from 'react-native-vector-icons/AntDesign';
 import FileMedical from 'react-native-vector-icons/FontAwesome5';
 
+import Patient from '../Screen/Patient';
+
 function Dasbord() {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -78,7 +80,7 @@ export default function Dashboard() {
           inactiveTintColor: 'gray',
         }}>
         <Tab.Screen name="Dasbord" component={Dasbord} />
-        <Tab.Screen name="Pationts" component={Patientlist} />
+        <Tab.Screen name="Pationts" component={Patient} />
         <Tab.Screen name="Consulations" component={Consulations} />
         <Tab.Screen name="More" component={More} />
       </Tab.Navigator>

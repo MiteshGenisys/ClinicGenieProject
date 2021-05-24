@@ -5,28 +5,51 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
-import data from '../data/data';
+import {get_patientdetails} from '../Services/AuthService';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import Pagination, {Icon, Dot} from 'react-native-pagination';
+import {TextInput} from 'react-native';
 
 class Patientlist extends React.Component {
-  state = {
-    data: data,
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      page: 1,
+      isLoading: false,
+    };
+  }
+  // state = {
+  //   data: [],
+  // };
+
+  componentDidMount = () => {
+    this.getpatientlist();
   };
 
-  patientlist = () => {
-    return this.state.data.map(data => {
-      return <Patient detail={data} key={data.id} />;
-    });
+  getpatientlist = () => {
+    get_patientdetails()
+      .then(res => {
+        const data = res.data;
+        this.setState({data: data});
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
+    console.log(this.state.data);
     return (
       <ScrollView
         style={styles.patientContainer}
         showsVerticalScrollIndicator={false}>
-        {this.patientlist()}
+        {this.state.data.map((item, index) => (
+          <Patient detail={item} key={index} />
+        ))}
       </ScrollView>
     );
   }
@@ -36,16 +59,26 @@ export default Patientlist;
 
 class Patient extends React.Component {
   render() {
+    const {detail} = this.props;
+    let today = new Date(),
+      dob = new Date(detail.date_of_birth),
+      diff = today.getTime() - dob.getTime(),
+      years = Math.floor(diff / 31556736000);
+
     return (
       <View style={styles.patientBox}>
         <View style={styles.nameContainer}>
-          <Text style={styles.pname}>{this.props.detail.username}</Text>
+          <Text style={styles.pname}>{this.props.detail.first_name}</Text>
+          <Text> {this.props.detail.last_name} </Text>
         </View>
         <View style={styles.patientdetailContainer}>
           <View style={styles.contactage}>
-            <Text style={styles.pcontact}> {this.props.detail.contact} </Text>
+            <Text style={styles.pcontact}>
+              {' '}
+              {this.props.detail.mobile_number}{' '}
+            </Text>
             <Text style={styles.pdetails}>|</Text>
-            <Text style={styles.pdetails}> {this.props.detail.age} </Text>
+            <Text style={styles.pdetails}> {years} </Text>
             <Text style={styles.pdetails}>|</Text>
             <Text style={styles.pdetails}> {this.props.detail.gender} </Text>
           </View>
@@ -133,33 +166,3 @@ const styles = StyleSheet.create({
     color: '#737373',
   },
 });
-
-// import React, {Component} from 'react';
-// import {View, Text, StyleSheet, ScrollView} from 'react-native';
-// import {createStackNavigator} from '@react-navigation/stack';
-
-// import data from '../data/data';
-// import Patient from '../Screen/Patient';
-
-// function HomeScreen() {
-//   return (
-//     <View>
-//       <Text>the body of patient list</Text>
-//     </View>
-//   );
-// }
-
-// const Stack = createStackNavigator();
-
-// function Patientlist() {
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{
-//         title: '',
-//       }}>
-//       <Stack.Screen name="Home" component={HomeScreen} />
-//     </Stack.Navigator>
-//   );
-// }
-
-// export default Patientlist;
