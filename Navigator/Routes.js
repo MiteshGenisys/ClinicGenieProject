@@ -6,6 +6,7 @@ import RequestRegistration from '../Screen/RequestRegistration';
 import ForgotPassword from '../Screen/ForgotPassword';
 import Patientlist from '../Screen/Patientlist';
 import Dashboard from '../Screen/Dashboard';
+import Addpatient from '../Screen/Addpatient';
 
 export default class Routes extends Component<{}> {
   render() {
@@ -20,6 +21,7 @@ export default class Routes extends Component<{}> {
           />
           <Scene key="forgot" component={ForgotPassword} title="forgot" />
           <Scene key="dasbord" component={Dashboard} title="dasbord" />
+          <Scene key="addpatient" component={Addpatient} title="addpatient" />
           <Scene
             key="patientlist"
             component={Patientlist}

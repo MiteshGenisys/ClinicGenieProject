@@ -1,108 +1,166 @@
-import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+// belove in readio button example
 
-import data from '../data/data';
+import * as React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {RadioButton} from 'react-native-paper';
 
-class Pagination extends React.Component {
-  constructor(props) {
-    super(props);
+class Addpatient extends React.Component {
+  constructor() {
+    super();
     this.state = {
-      data: [],
-      page: 1,
-      isLoading: false,
+      checked: 'male',
     };
   }
 
-  componentDidMount() {
-    this.setState({isLoading: true}, this.getData);
-    // this.getData();
-  }
-
-  getData = async () => {   
-    const apiURL =
-      'https://jsonplaceholder.typicode.com/photos?_limit=5&_page=' +
-      this.state.page;
-    fetch(apiURL)
-      .then(res => res.json())
-      .then(resJson => {
-        this.setState({
-          data: this.state.data.concat(resJson),
-          isLoading: false,
-        });
-      });
-  };
-
-  renderRow = ({item}) => {
-    return (
-      <View style={styles.itemRow}>
-        <Image source={{uri: item.url}} style={styles.itemImage} />
-        <Text style={styles.itemText}> {item.title} </Text>
-        <Text style={styles.itemText}> {item.id} </Text>
-      </View>
-    );
-  };
-
-  renderFooter = () => {
-    return this.state.isLoading ? (
-      <View style={styles.loader}>
-        <ActivityIndicator size="large" />
-      </View>
-    ) : null;
-  };
-
-  handleLoadMore = () => {
-    this.setState({page: this.state.page + 1, isLoading: true}, this.getData); // using this logic firs print 10 data than display more data
-  };
-
   render() {
+    const {checked} = this.state;
+    console.log(checked);
+
     return (
-      <FlatList
-        style={styles.container}
-        data={this.state.data}
-        renderItem={this.renderRow}
-        keyExtractor={(item, index) => index.toString()}
-        onEndReached={this.handleLoadMore}
-        onEndReachedThreshold={0}
-        ListFooterComponent={this.renderFooter}
-      />
+      <View>
+        <View style={styles.radioContainer}>
+          <Text style={styles.malefemale}>Gender</Text>
+          <RadioButton
+            value="male"
+            status={checked === 'male' ? 'checked' : 'unchecked'}
+            onPress={() => {
+              this.setState({checked: 'male'});
+            }}
+          />
+          <Text style={styles.malefemale}>Male</Text>
+
+          <RadioButton
+            value="female"
+            status={checked === 'female' ? 'checked' : 'unchecked'}
+            onPress={() => {
+              this.setState({checked: 'female'});
+            }}
+          />
+          <Text style={styles.malefemale}>Female</Text>
+        </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    backgroundColor: '#f5fcff',
+  radioContainer: {
+    flexDirection: 'row',
+    marginLeft: 100,
+    height: '25%',
   },
-  itemRow: {
-    borderColor: '#ccc',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-  },
-  itemText: {
-    fontSize: 16,
-    padding: 5,
-  },
-  itemImage: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-  },
-  loader: {
-    marginTop: 10,
-    alignItems: 'center',
+  malefemale: {
+    marginTop: 7,
   },
 });
 
-export default Pagination;
+export default Addpatient;
+
+// import React, {Component} from 'react';
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   ScrollView,
+//   FlatList,
+//   Image,
+//   ActivityIndicator,
+// } from 'react-native';
+
+// import data from '../data/data';
+
+// class Pagination extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       data: [],
+//       page: 1,
+//       isLoading: false,
+//     };
+//   }
+
+//   componentDidMount() {
+//     this.setState({isLoading: true}, this.getData);
+//     // this.getData();
+//   }
+
+//   getData = async () => {
+//     const apiURL =
+//       'https://jsonplaceholder.typicode.com/photos?_limit=5&_page=' +
+//       this.state.page;
+//     fetch(apiURL)
+//       .then(res => res.json())
+//       .then(resJson => {
+//         this.setState({
+//           data: this.state.data.concat(resJson),
+//           isLoading: false,
+//         });
+//       });
+//   };
+
+//   renderRow = ({item}) => {
+//     return (
+//       <View style={styles.itemRow}>
+//         <Image source={{uri: item.url}} style={styles.itemImage} />
+//         <Text style={styles.itemText}> {item.title} </Text>
+//         <Text style={styles.itemText}> {item.id} </Text>
+//       </View>
+//     );
+//   };
+
+//   renderFooter = () => {
+//     return this.state.isLoading ? (
+//       <View style={styles.loader}>
+//         <ActivityIndicator size="large" />
+//       </View>
+//     ) : null;
+//   };
+
+//   handleLoadMore = () => {
+//     this.setState({page: this.state.page + 1, isLoading: true}, this.getData); // using this logic firs print 10 data than display more data
+//   };
+
+//   render() {
+//     return (
+//       <FlatList
+//         style={styles.container}
+//         data={this.state.data}
+//         renderItem={this.renderRow}
+//         keyExtractor={(item, index) => index.toString()}
+//         onEndReached={this.handleLoadMore}
+//         onEndReachedThreshold={0}
+//         ListFooterComponent={this.renderFooter}
+//       />
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     marginTop: 20,
+//     backgroundColor: '#f5fcff',
+//   },
+//   itemRow: {
+//     borderColor: '#ccc',
+//     marginBottom: 10,
+//     borderBottomWidth: 1,
+//   },
+//   itemText: {
+//     fontSize: 16,
+//     padding: 5,
+//   },
+//   itemImage: {
+//     width: '100%',
+//     height: 200,
+//     resizeMode: 'cover',
+//   },
+//   loader: {
+//     marginTop: 10,
+//     alignItems: 'center',
+//   },
+// });
+
+// export default Pagination;
 
 // import React, {Component} from 'react';
 // import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';

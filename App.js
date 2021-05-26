@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import Routes from './Navigator/Routes';
 import configureStore from './Redux/Store/Index';
 import Pagination from './Components/Pagination';
-import Patientlist from './Screen/Patientlist';
+import Radio from './Components/Pagination';
 
 class App extends Component {
   render() {
@@ -14,7 +14,7 @@ class App extends Component {
       <Provider store={configureStore}>
         {/* <Patientlist /> */}
         <Routes />
-        {/* <Pagination /> */}
+        {/* <Radio /> */}
       </Provider>
     );
   }

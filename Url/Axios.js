@@ -31,6 +31,18 @@ const axiosdata = {
     });
   },
 
+  postwithtoken: async (url, params) => {
+    const Token = await AsyncStorage.getItem('token');
+    return axios({
+      method: 'post',
+      headers: {
+        Authorization: Token,
+      },
+      params,
+      url: DevURL + url,
+    });
+  },
+
   deletewithParamToken: (url, params) => {
     return axios({
       method: 'delete',

@@ -79,7 +79,7 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Formik
+          <Formik 
             validationSchema={loginValidationSchema}
             initialValues={this.state.initialValues}
             onSubmit={this.onsubmmit}>

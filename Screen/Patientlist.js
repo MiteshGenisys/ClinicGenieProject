@@ -10,6 +10,7 @@ import {
 import {get_patientdetails} from '../Services/AuthService';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import Color from '../constant/Colors';
 import Pagination, {Icon, Dot} from 'react-native-pagination';
 import {TextInput} from 'react-native';
 
@@ -69,7 +70,7 @@ class Patient extends React.Component {
       <View style={styles.patientBox}>
         <View style={styles.nameContainer}>
           <Text style={styles.pname}>{this.props.detail.first_name}</Text>
-          <Text> {this.props.detail.last_name} </Text>
+          <Text style={styles.pname}> {this.props.detail.last_name} </Text>
         </View>
         <View style={styles.patientdetailContainer}>
           <View style={styles.contactage}>
@@ -88,11 +89,15 @@ class Patient extends React.Component {
                 style={styles.icon}
                 name="pen"
                 size={17}
-                color="#949494"
+                color={Color.patientlist}
               />
             </TouchableOpacity>
             <TouchableOpacity>
-              <FontAwesome name="trash-alt" size={17} color="#737373" />
+              <FontAwesome
+                name="trash-alt"
+                size={17}
+                color={Color.patientlist}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -157,12 +162,12 @@ const styles = StyleSheet.create({
   },
   pdetails: {
     marginLeft: 10,
-    color: '#737373',
+    color: Color.patientlist,
   },
   pcontact: {
-    color: '#737373',
+    color: Color.patientlist,
   },
   lastdate: {
-    color: '#737373',
+    color: Color.patientlist,
   },
 });
