@@ -10,9 +10,9 @@ import Color from '../constant/Colors';
 
 const Stack = createStackNavigator();
 class Patient extends React.Component {
-  addpatient() {
-    Actions.addpatient();
-  }
+  addpatient = () => {
+    this.props.navigation.navigate('addpatient');
+  };
 
   render() {
     return (

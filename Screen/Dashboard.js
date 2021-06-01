@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -10,7 +10,6 @@ import MedicineboxIcon from 'react-native-vector-icons/AntDesign';
 import FileMedical from 'react-native-vector-icons/FontAwesome5';
 
 import Patient from '../Screen/Patient';
-
 function Dasbord() {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -55,36 +54,34 @@ const Tab = createBottomTabNavigator();
 
 export default function Dashboard() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
-            let iconName;
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
 
-            if (route.name === 'Dasbord') {
-              iconName = focused ? 'home' : 'home';
-            } else if (route.name === 'Pationts') {
-              iconName = focused ? 'bed' : 'bed';
-            } else if (route.name === 'Consulations') {
-              iconName = focused ? 'stethoscope' : 'stethoscope';
-            } else if (route.name === 'More') {
-              iconName = focused ? 'ellipsis-h' : 'ellipsis-h';
-            }
+          if (route.name === 'Dasbord') {
+            iconName = focused ? 'home' : 'home';
+          } else if (route.name === 'Pationts') {
+            iconName = focused ? 'bed' : 'bed';
+          } else if (route.name === 'Consulations') {
+            iconName = focused ? 'stethoscope' : 'stethoscope';
+          } else if (route.name === 'More') {
+            iconName = focused ? 'ellipsis-h' : 'ellipsis-h';
+          }
 
-            // You can return any component that you like here!
-            return <FontAwesome name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: 'blue',
-          inactiveTintColor: 'gray',
-        }}>
-        <Tab.Screen name="Dasbord" component={Dasbord} />
-        <Tab.Screen name="Pationts" component={Patient} />
-        <Tab.Screen name="Consulations" component={Consulations} />
-        <Tab.Screen name="More" component={More} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          // You can return any component that you like here!
+          return <FontAwesome name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'blue',
+        inactiveTintColor: 'gray',
+      }}>
+      <Tab.Screen name="Dasbord" component={Dasbord} />
+      <Tab.Screen name="Pationts" component={Patient} />
+      <Tab.Screen name="Consulations" component={Consulations} />
+      <Tab.Screen name="More" component={More} />
+    </Tab.Navigator>
   );
 }
 

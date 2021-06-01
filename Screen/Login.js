@@ -8,10 +8,8 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  AppRegistry,
+  Alert,
 } from 'react-native';
-import {StackNavigator} from 'react-navigation';
-import {Actions} from 'react-native-router-flux';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,13 +29,6 @@ const loginValidationSchema = yup.object().shape({
 });
 
 class Login extends Component {
-  request_registration() {
-    Actions.request_registration();
-  }
-  forgot() {
-    Actions.forgot();
-  }
-
   constructor() {
     super();
     this.state = {
@@ -59,6 +50,9 @@ class Login extends Component {
         const Token = AsyncStorage.getItem('token'); // get token from local storage
         if (Token !== null) {
           console.log(Token);
+          const Massage = res.data.message;
+          Alert.alert(Massage);
+
           this.props.navigation.navigate('dasbord');
         }
       })
@@ -71,15 +65,18 @@ class Login extends Component {
     headerMode: 'none',
   };
 
-  // nextpage = () => {
-  //   this.props.navigation.navigate('dasbord');
-  // };
+  request_registration = () => {
+    this.props.navigation.navigate('request_registration');
+  };
+  forgot = () => {
+    this.props.navigation.navigate('forgot');
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Formik 
+          <Formik
             validationSchema={loginValidationSchema}
             initialValues={this.state.initialValues}
             onSubmit={this.onsubmmit}>
@@ -106,7 +103,7 @@ class Login extends Component {
                     placeholder="Email Address"
                     style={styles.textInput}
                     onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
+                      
                     value={values.email}
                     keyboardType="email-address"
                   />

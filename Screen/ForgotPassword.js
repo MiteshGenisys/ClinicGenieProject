@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Button, Alert} from 'react-native';
 import axios from 'axios';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -27,6 +27,9 @@ class ForgotPassword extends Component {
     auth_forgot(values.email)
       .then(res => {
         console.log(res);
+        const Massage = res.data.message;
+        Alert.alert(Massage);
+        this.props.navigation.navigate('login');
       })
       .catch(err => {
         console.log(err);

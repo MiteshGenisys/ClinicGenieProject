@@ -1,60 +1,87 @@
-// belove in readio button example
-
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {RadioButton} from 'react-native-paper';
+import {View} from 'react-native';
+import {RadioButton, Text} from 'react-native-paper';
 
-class Addpatient extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      checked: 'male',
-    };
-  }
+export default class MyComponent extends React.Component {
+  state = {
+    gender: 'male',
+  };
 
   render() {
-    const {checked} = this.state;
-    console.log(checked);
-
     return (
-      <View>
-        <View style={styles.radioContainer}>
-          <Text style={styles.malefemale}>Gender</Text>
-          <RadioButton
-            value="male"
-            status={checked === 'male' ? 'checked' : 'unchecked'}
-            onPress={() => {
-              this.setState({checked: 'male'});
-            }}
-          />
-          <Text style={styles.malefemale}>Male</Text>
-
-          <RadioButton
-            value="female"
-            status={checked === 'female' ? 'checked' : 'unchecked'}
-            onPress={() => {
-              this.setState({checked: 'female'});
-            }}
-          />
-          <Text style={styles.malefemale}>Female</Text>
+      <RadioButton.Group
+        onValueChange={value => this.setState({value})}
+        value={this.state.value}>
+        <View>
+          <Text>First</Text>
+          <RadioButton value="male" />
         </View>
-      </View>
+        <View>
+          <Text>Second</Text>
+          <RadioButton value="female" />
+        </View>
+      </RadioButton.Group>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  radioContainer: {
-    flexDirection: 'row',
-    marginLeft: 100,
-    height: '25%',
-  },
-  malefemale: {
-    marginTop: 7,
-  },
-});
+// belove in readio button example
 
-export default Addpatient;
+// import * as React from 'react';
+// import {View, Text, StyleSheet} from 'react-native';
+// import {RadioButton} from 'react-native-paper';
+
+// class Addpatient extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       checked: 'male',
+//     };
+//   }
+
+//   render() {
+//     const {checked} = this.state;
+//     console.log(checked);
+
+//     return (
+//       <View>
+//         <View style={styles.radioContainer}>
+//           <Text style={styles.malefemale}>Gender</Text>
+//           <RadioButton
+//             value="male"
+//             status={checked === 'male' ? 'checked' : 'unchecked'}
+//             onPress={() => {
+//               this.setState({checked: 'male'});
+//             }}
+//           />
+//           <Text style={styles.malefemale}>Male</Text>
+
+//           <RadioButton
+//             value="female"
+//             status={checked === 'female' ? 'checked' : 'unchecked'}
+//             onPress={() => {
+//               this.setState({checked: 'female'});
+//             }}
+//           />
+//           <Text style={styles.malefemale}>Female</Text>
+//         </View>
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   radioContainer: {
+//     flexDirection: 'row',
+//     marginLeft: 100,
+//     height: '25%',
+//   },
+//   malefemale: {
+//     marginTop: 7,
+//   },
+// });
+
+// export default Addpatient;
 
 // import React, {Component} from 'react';
 // import {

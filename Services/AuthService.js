@@ -45,7 +45,7 @@ export const get_patientdetails = () => {
   return new Promise(async (resolve, reject) => {
     return api
       .getWithParamToken(
-        `/patients?fromDate=01-01-2015&toDate=05-05-2022&search=&page=1&limit=10`,
+        `/patients?fromDate=&toDate=&search=&page=1&limit=1000`,
       )
       .then(res => {
         resolve(res);
@@ -56,10 +56,23 @@ export const get_patientdetails = () => {
   });
 };
 
-export const add_patient = body => {
+export const get_patient = id => {
   return new Promise(async (resolve, reject) => {
     return api
-      .postwithtoken(`/patient/create`, body)
+      .getWithParamToken(`/patient/${id}`)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+export const edit_patients = (id, body) => {
+  return new Promise(async (resolve, reject) => {
+    return api
+      .putWithToken(`/patient/${id}`, body)
       .then(res => {
         resolve(res);
       })

@@ -6,10 +6,10 @@ import {
   TextInput,
   Button,
   Text,
+  Alert,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-
 import Color from '../constant/Colors';
 import {auth_register} from '../Services/AuthService';
 
@@ -64,6 +64,9 @@ class RequestRegistration extends Component {
     auth_register(body)
       .then(res => {
         console.log(res);
+        Massage = res.data.message;
+        Alert.alert(Massage);
+        this.props.navigation.navigate('login');
       })
       .catch(err => {
         console.log(err);

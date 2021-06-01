@@ -31,14 +31,25 @@ const axiosdata = {
     });
   },
 
-  postwithtoken: async (url, params) => {
+  putWithToken: async (url, data) => {
+    const Token = await AsyncStorage.getItem('token');
+    return axios({
+      method: 'PATCH',
+      headers: {
+        Authorization: Token,
+      },
+      data,
+      url: DevURL + url,
+    });
+  },
+
+  postwithtoken: async url => {
     const Token = await AsyncStorage.getItem('token');
     return axios({
       method: 'post',
       headers: {
         Authorization: Token,
       },
-      params,
       url: DevURL + url,
     });
   },

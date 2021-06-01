@@ -5,71 +5,86 @@ import {
   StyleSheet,
   ScrollView,
   Button,
-  View,
-  Alert,
+  View,Alert
 } from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import DatePicker from 'react-native-datepicker';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RadioButton} from 'react-native-paper';
-import Color from '../constant/Colors';
 import moment from 'moment';
 
-class Addpatient extends React.Component {
+import Color from '../constant/Colors';
+import {get_patient, edit_patients} from '../Services/AuthService';
+
+class Editprofile extends React.Component {
   constructor() {
     super();
     this.state = {
       first_name: '',
       last_name: '',
       mobile_number: '',
-      contact_method: '',
       email: '',
+      checked: '',
+      marital_status: '',
+      contact_method: '',
       spouse_partner_name: '',
-      personal_notes: '',
-      selectedcat: '',
       date_of_birth: '',
       anniversary_date: '',
-      checked: 'male',
-      marital_status: 'married',
+      personal_notes: '',
     };
   }
+
+  componentDidMount = () => {
+    this.getpatientlist();
+  };
+
+  getpatientlist = () => {
+    const id = this.props.route.params.data._id;
+
+    get_patient(id)
+      .then(res => {
+        console.log(res.data.date_of_birth);
+        const data = res.data;
+        this.setState({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          mobile_number: data.mobile_number,
+          email: data.email,
+          checked: data.checked,
+          marital_status: data.marital_status,
+          contact_method: data.contact_method,
+          spouse_partner_name: data.spouse_partner_name,
+          date_of_birth: data.date_of_birth,
+          anniversary_date: data.anniversary_date,
+          personal_notes: data.personal_notes,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   onsubmit = async () => {
-    // console.log(this.state);
+    const id = this.props.route.params.data._id;
+
     const body = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       mobile_number: this.state.mobile_number,
       contact_method: this.state.contact_method,
       gender: this.state.checked,
-      marital_status: this.state.marital_status,
-      spouse_partner_name: this.state.spouse_partner_name,
-      email: this.state.email,
       date_of_birth: moment(this.state.date_of_birth).format('DD-MM-YYYY'),
+      marital_status: this.state.marital_status,
       anniversary_date: moment(this.state.anniversary_date).format(
         'DD-MM-YYYY',
       ),
       personal_notes: this.state.personal_notes,
+      spouse_partner_name: this.state.spouse_partner_name,
     };
-    console.log('body', body);
-    const Token = await AsyncStorage.getItem('token');
-    axios
-      .post(
-        'https://devapi-clinicgenie.indiagenisys.com/patient/create',
-        body,
-        {
-          headers: {
-            Authorization: Token,
-          },
-        },
-      )
+    edit_patients(id, body)
       .then(res => {
         console.log(res);
-        if (Token !== null) {
-          const Massage = res.data.message;
-          Alert.alert(Massage);
-          this.props.navigation.navigate('dasbord');
-        }
+        Alert.alert('Patient updated..')
+        this.props.navigation.navigate('dasbord');
       })
       .catch(err => {
         console.log(err);
@@ -77,12 +92,14 @@ class Addpatient extends React.Component {
   };
 
   render() {
+    // console.log(this.state.data);
     const {checked} = this.state;
     return (
       <ScrollView style={styles.addpatientContainer}>
         <Text>General information</Text>
         <TextInput
           style={styles.inputText}
+          defaultValue={this.state.first_name}
           placeholder="Enter first name"
           name="first_name"
           onChangeText={text => {
@@ -91,6 +108,7 @@ class Addpatient extends React.Component {
         />
         <TextInput
           style={styles.inputText}
+          defaultValue={this.state.last_name}
           placeholder="Enter last name"
           name="last_name"
           onChangeText={text => {
@@ -99,6 +117,7 @@ class Addpatient extends React.Component {
         />
         <TextInput
           style={styles.inputText}
+          defaultValue={this.state.mobile_number}
           placeholder="Mobilenumber"
           name="mobile_number"
           onChangeText={text => {
@@ -107,6 +126,7 @@ class Addpatient extends React.Component {
         />
         <TextInput
           style={styles.inputText}
+          defaultValue={this.state.email}
           placeholder="Enter email"
           name="email"
           onChangeText={text => {
@@ -135,7 +155,7 @@ class Addpatient extends React.Component {
         </View>
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={this.state.marital_status}
+            selectedValue={this.state.marital_status} // marital statush featching value in edit profile is panding
             style={{height: 50, width: '100%'}}
             onValueChange={(text, itemIndex) =>
               this.setState({marital_status: text})
@@ -148,6 +168,7 @@ class Addpatient extends React.Component {
         <Text>Personal information</Text>
         <TextInput
           style={styles.inputText}
+          defaultValue={this.state.contact_method}
           placeholder="contact"
           name="contact_method"
           onChangeText={text => {
@@ -157,6 +178,7 @@ class Addpatient extends React.Component {
         <TextInput
           style={styles.inputText}
           placeholder="Spoise/Partner name "
+          defaultValue={this.state.spouse_partner_name}
           name="spouse_partner_name"
           onChangeText={text => {
             this.setState({spouse_partner_name: text});
@@ -173,6 +195,7 @@ class Addpatient extends React.Component {
         <DatePicker
           style={styles.datepiker}
           placeholder="Select anniversary date"
+          defaultValue={this.state.anniversary_date}
           date={this.state.anniversary_date}
           onDateChange={text => {
             this.setState({anniversary_date: text});
@@ -180,6 +203,7 @@ class Addpatient extends React.Component {
         />
         <TextInput
           style={styles.inputText}
+          value={this.state.personal_notes}
           placeholder="Presonal notes for extra details"
           name="personal_notes"
           onChangeText={text => {
@@ -198,7 +222,6 @@ const styles = StyleSheet.create({
   addpatientContainer: {
     flex: 1,
     padding: 15,
-    marginBottom: 1,
     backgroundColor: 'white',
   },
   inputText: {
@@ -250,4 +273,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Addpatient;
+export default Editprofile;
