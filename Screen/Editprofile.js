@@ -5,7 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   Button,
-  View,Alert
+  View,
+  Alert,
 } from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import DatePicker from 'react-native-datepicker';
@@ -49,7 +50,7 @@ class Editprofile extends React.Component {
           last_name: data.last_name,
           mobile_number: data.mobile_number,
           email: data.email,
-          checked: data.checked,
+          checked: data.gender,
           marital_status: data.marital_status,
           contact_method: data.contact_method,
           spouse_partner_name: data.spouse_partner_name,
@@ -83,7 +84,7 @@ class Editprofile extends React.Component {
     edit_patients(id, body)
       .then(res => {
         console.log(res);
-        Alert.alert('Patient updated..')
+        Alert.alert('Patient updated..');
         this.props.navigation.navigate('dasbord');
       })
       .catch(err => {
@@ -136,7 +137,7 @@ class Editprofile extends React.Component {
         <View style={styles.radionbtnContainer}>
           <Text style={styles.malefemale}>Gender</Text>
           <RadioButton
-            value="male"
+            defaultValue={this.state.checked}
             status={checked === 'male' ? 'checked' : 'unchecked'}
             onPress={() => {
               this.setState({checked: 'male'});
@@ -145,7 +146,7 @@ class Editprofile extends React.Component {
           <Text style={styles.malefemale}>Male</Text>
 
           <RadioButton
-            value="female"
+            defaultValue={this.state.checked}
             status={checked === 'female' ? 'checked' : 'unchecked'}
             onPress={() => {
               this.setState({checked: 'female'});
