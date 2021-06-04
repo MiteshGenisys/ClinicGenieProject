@@ -1,29 +1,76 @@
-import * as React from 'react';
-import {View} from 'react-native';
-import {RadioButton, Text} from 'react-native-paper';
+import React, {Component} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
-export default class MyComponent extends React.Component {
-  state = {
-    gender: 'male',
+import TagInput from 'react-native-tags-input';
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tags: {
+        tag: '',
+        tagsArray: [],
+      },
+    };
+  }
+
+  updateTagState = state => {
+    this.setState({
+      tags: state,
+    });
   };
 
   render() {
     return (
-      <RadioButton.Group
-        onValueChange={value => this.setState({value})}
-        value={this.state.value}>
-        <View>
-          <Text>First</Text>
-          <RadioButton value="male" />
-        </View>
-        <View>
-          <Text>Second</Text>
-          <RadioButton value="female" />
-        </View>
-      </RadioButton.Group>
+      <View style={styles.container}>
+        <TagInput
+          style={styles.inputtag}
+          updateState={this.updateTagState}
+          tags={this.state.tags}
+        />
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
+  },
+  inputtag: {
+    backgroundColor: 'white',
+  },
+});
+
+// import * as React from 'react';
+// import {View} from 'react-native';
+// import {RadioButton, Text} from 'react-native-paper';
+
+// export default class MyComponent extends React.Component {
+//   state = {
+//     gender: 'male',
+//   };
+
+//   render() {
+//     return (
+//       <RadioButton.Group
+//         onValueChange={value => this.setState({value})}
+//         value={this.state.value}>
+//         <View>
+//           <Text>First</Text>
+//           <RadioButton value="male" />
+//         </View>
+//         <View>
+//           <Text>Second</Text>
+//           <RadioButton value="female" />
+//         </View>
+//       </RadioButton.Group>
+//     );
+//   }
+// }
 
 // belove in readio button example
 

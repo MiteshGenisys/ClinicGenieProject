@@ -69,10 +69,36 @@ export const get_patient = id => {
   });
 };
 
+export const getConsultation = id => {
+  return new Promise(async (resolve, reject) => {
+    return api
+      .getWithParamToken(`/doctor/consult/${id}`)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
 export const edit_patients = (id, body) => {
   return new Promise(async (resolve, reject) => {
     return api
       .putWithToken(`/patient/${id}`, body)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+export const add_consultation = (id, body) => {
+  return new Promise(async (resolve, reject) => {
+    return api
+      .postWithToken(`/doctor/consult/create/${id}`, body)
       .then(res => {
         resolve(res);
       })

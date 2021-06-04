@@ -43,14 +43,15 @@ const axiosdata = {
     });
   },
 
-  postwithtoken: async url => {
+  postWithToken: async (url, data) => {
     const Token = await AsyncStorage.getItem('token');
     return axios({
-      method: 'post',
+      method: 'POST',
       headers: {
         Authorization: Token,
       },
       url: DevURL + url,
+      data,
     });
   },
 

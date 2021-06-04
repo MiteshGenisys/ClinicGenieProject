@@ -9,7 +9,10 @@ import Patientlist from '../Screen/Patientlist';
 import Dashboard from '../Screen/Dashboard';
 import Addpatient from '../Screen/Addpatient';
 import EditProfile from '../Screen/Editprofile';
-import Consulation from '../Screen/Consulation';
+import Consultation from '../Screen/Consultation';
+import AddConsultation from '../Screen/AddConsultation';
+import ConsulationList from '../Screen/ConsultationList';
+import Report from '../Screen/Report';
 
 const Stack = createStackNavigator();
 export default class Routes extends Component<{}> {
@@ -57,10 +60,16 @@ export default class Routes extends Component<{}> {
           options={{}}
         />
         <Stack.Screen
-          key="consulation"
-          name="consulation"
-          component={Consulation}
+          key="consultation"
+          name="consultation"
+          component={ConsulationList}
         />
+        <Stack.Screen
+          key="addConsultation"
+          name="addConsultation"
+          component={AddConsultation}
+        />
+        <Stack.Screen key="report" name="report" component={Report} />
       </Stack.Navigator>
     );
   }
