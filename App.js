@@ -6,7 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import configureStore from './Redux/Store/Index';
 
 import Routes from './Navigator/Routes';
-import MyComponent from './Components/Pagination';
+import MyClass from './Components/Pagination';
 
 class App extends Component {
   render() {
@@ -14,7 +14,7 @@ class App extends Component {
       <Provider store={configureStore}>
         <NavigationContainer>
           <Routes />
-          {/* <MyComponent /> */}
+          {/* <MyClass /> */}
         </NavigationContainer>
       </Provider>
     );

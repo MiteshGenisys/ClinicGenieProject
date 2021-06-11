@@ -1,261 +1,342 @@
 import React, {Component} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 
-import TagInput from 'react-native-tags-input';
+import Color from '../constant/Colors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
-export default class App extends React.Component {
+class Report extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tags: {
-        tag: '',
-        tagsArray: [],
-      },
+      textInput: [],
+      inputData: [],
+      decData: [],
+      resultData: [],
     };
   }
 
-  updateTagState = state => {
-    this.setState({
-      tags: state,
-    });
+  componentDidMount = () => {
+    this.addTextInput();
+  };
+
+  //function to add TextInput dynamically
+  addTextInput = index => {
+    let textInput = this.state.textInput;
+    textInput.push(
+      <View style={styles.inputboxContainer}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => this.removeTextInput()}>
+          <FontAwesome
+            style={styles.icon}
+            name="times"
+            size={17}
+            color={Color.patientlist}
+          />
+        </TouchableOpacity>
+        <View>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter report type"
+            onChangeText={text => this.addValues(text, index)}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter description"
+            onChangeText={text => this.addDecValues(text, index)}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter result"
+            onChangeText={text => this.addresultValues(text, index)}
+          />
+        </View>
+      </View>,
+    );
+    this.setState({textInput});
+  };
+
+  //function to remove TextInput dynamically
+  removeTextInput = () => {
+    let textInput = this.state.textInput;
+    let inputData = this.state.inputData;
+    textInput.pop();
+    inputData.pop();
+    this.setState({textInput, inputData});
+  };
+
+  //function to add text from TextInputs into single array
+  addValues = (text, index) => {
+    let dataArray = this.state.inputData;
+    let checkBool = false;
+    if (dataArray.length !== 0) {
+      dataArray.forEach(element => {
+        if (element.index === index) {
+          element.text = text;
+          checkBool = true;
+        }
+      });
+    }
+    if (checkBool) {
+      this.setState({
+        inputData: dataArray,
+      });
+    } else {
+      dataArray.push({text: text, index: index});
+      this.setState({
+        inputData: dataArray,
+      });
+    }
+  };
+  addDecValues = (text, index) => {
+    let dataArray = this.state.decData;
+    let checkBool = false;
+    if (dataArray.length !== 0) {
+      dataArray.forEach(element => {
+        if (element.index === index) {
+          element.text = text;
+          checkBool = true;
+        }
+      });
+    }
+    if (checkBool) {
+      this.setState({
+        decData: dataArray,
+      });
+    } else {
+      dataArray.push({text: text, index: index});
+      this.setState({
+        decData: dataArray,
+      });
+    }
+  };
+  addresultValues = (text, index) => {
+    let dataArray = this.state.resultData;
+    let checkBool = false;
+    if (dataArray.length !== 0) {
+      dataArray.forEach(element => {
+        if (element.index === index) {
+          element.text = text;
+          checkBool = true;
+        }
+      });
+    }
+    if (checkBool) {
+      this.setState({
+        resultData: dataArray,
+      });
+    } else {
+      dataArray.push({text: text, index: index});
+      this.setState({
+        resultData: dataArray,
+      });
+    }
+  };
+
+  //function to console the output
+  getValues = () => {
+    const inputData = this.state.inputData;
+    const decData = this.state.decData;
+    const resultData = this.state.resultData;
+
+    console.log(
+      'inputData',
+      {inputData},
+      'Description Data',
+      {decData},
+      'resultData',
+      {resultData},
+    );
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <TagInput
-          style={styles.inputtag}
-          updateState={this.updateTagState}
-          tags={this.state.tags}
-        />
+      <View style={styles.Container}>
+        <View style={styles.titleContainer}>
+          <View style={styles.titleView}>
+            <Text style={styles.titletext}>Report List</Text>
+          </View>
+          <View style={styles.buttonView}>
+            <Button title="Add report" onPress={this.add_consultation} />
+          </View>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {this.state.textInput.map(value => {
+            return value;
+          })}
+          <View style={styles.addsubmitButton}>
+            <View>
+              <Button
+                title="Add"
+                onPress={() => this.addTextInput(this.state.textInput.length)}
+              />
+            </View>
+            <View>
+              <Button title="submit" onPress={() => this.getValues()} />
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '10%',
+    backgroundColor: '#EAF2FB',
   },
-  inputtag: {
+  titleView: {
+    marginTop: 7,
+  },
+  titletext: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    padding: 5,
+    marginLeft: 5,
+  },
+  buttonView: {
+    justifyContent: 'center',
+    margin: 7,
+    marginRight: 10,
+  },
+  Container: {
     backgroundColor: 'white',
+    height: '100%',
+  },
+  inputboxContainer: {
+    flex: 1,
+    width: '80%',
+    alignSelf: 'center',
+    marginTop: 10,
+    backgroundColor: 'white',
+  },
+  textInput: {
+    marginTop: 25,
+    padding: 12,
+    paddingLeft: 13,
+    width: '100%',
+    backgroundColor: Color.textInput,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  addsubmitButton: {
+    flexDirection: 'row',
+    width: '80%',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 15,
+    marginBottom: 10,
+  },
+  iconContainer: {
+    width: '100%',
+    backgroundColor: 'white',
+  },
+  icon: {
+    alignSelf: 'flex-end',
   },
 });
 
-// import * as React from 'react';
-// import {View} from 'react-native';
-// import {RadioButton, Text} from 'react-native-paper';
-
-// export default class MyComponent extends React.Component {
-//   state = {
-//     gender: 'male',
-//   };
-
-//   render() {
-//     return (
-//       <RadioButton.Group
-//         onValueChange={value => this.setState({value})}
-//         value={this.state.value}>
-//         <View>
-//           <Text>First</Text>
-//           <RadioButton value="male" />
-//         </View>
-//         <View>
-//           <Text>Second</Text>
-//           <RadioButton value="female" />
-//         </View>
-//       </RadioButton.Group>
-//     );
-//   }
-// }
-
-// belove in readio button example
-
-// import * as React from 'react';
-// import {View, Text, StyleSheet} from 'react-native';
-// import {RadioButton} from 'react-native-paper';
-
-// class Addpatient extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       checked: 'male',
-//     };
-//   }
-
-//   render() {
-//     const {checked} = this.state;
-//     console.log(checked);
-
-//     return (
-//       <View>
-//         <View style={styles.radioContainer}>
-//           <Text style={styles.malefemale}>Gender</Text>
-//           <RadioButton
-//             value="male"
-//             status={checked === 'male' ? 'checked' : 'unchecked'}
-//             onPress={() => {
-//               this.setState({checked: 'male'});
-//             }}
-//           />
-//           <Text style={styles.malefemale}>Male</Text>
-
-//           <RadioButton
-//             value="female"
-//             status={checked === 'female' ? 'checked' : 'unchecked'}
-//             onPress={() => {
-//               this.setState({checked: 'female'});
-//             }}
-//           />
-//           <Text style={styles.malefemale}>Female</Text>
-//         </View>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   radioContainer: {
-//     flexDirection: 'row',
-//     marginLeft: 100,
-//     height: '25%',
-//   },
-//   malefemale: {
-//     marginTop: 7,
-//   },
-// });
-
-// export default Addpatient;
+export default Report;
 
 // import React, {Component} from 'react';
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   ScrollView,
-//   FlatList,
-//   Image,
-//   ActivityIndicator,
-// } from 'react-native';
+// import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
 
-// import data from '../data/data';
+// // import ReportBox from '../Components/ReportBox';
 
-// class Pagination extends React.Component {
+// class MyClass extends Component {
 //   constructor(props) {
 //     super(props);
 //     this.state = {
-//       data: [],
-//       page: 1,
-//       isLoading: false,
+//       textInput: [],
+//       inputData: [],
 //     };
 //   }
 
-//   componentDidMount() {
-//     this.setState({isLoading: true}, this.getData);
-//     // this.getData();
-//   }
-
-//   getData = async () => {
-//     const apiURL =
-//       'https://jsonplaceholder.typicode.com/photos?_limit=5&_page=' +
-//       this.state.page;
-//     fetch(apiURL)
-//       .then(res => res.json())
-//       .then(resJson => {
-//         this.setState({
-//           data: this.state.data.concat(resJson),
-//           isLoading: false,
-//         });
-//       });
-//   };
-
-//   renderRow = ({item}) => {
-//     return (
-//       <View style={styles.itemRow}>
-//         <Image source={{uri: item.url}} style={styles.itemImage} />
-//         <Text style={styles.itemText}> {item.title} </Text>
-//         <Text style={styles.itemText}> {item.id} </Text>
-//       </View>
-//     );
-//   };
-
-//   renderFooter = () => {
-//     return this.state.isLoading ? (
-//       <View style={styles.loader}>
-//         <ActivityIndicator size="large" />
-//       </View>
-//     ) : null;
-//   };
-
-//   handleLoadMore = () => {
-//     this.setState({page: this.state.page + 1, isLoading: true}, this.getData); // using this logic firs print 10 data than display more data
-//   };
-
-//   render() {
-//     return (
-//       <FlatList
-//         style={styles.container}
-//         data={this.state.data}
-//         renderItem={this.renderRow}
-//         keyExtractor={(item, index) => index.toString()}
-//         onEndReached={this.handleLoadMore}
-//         onEndReachedThreshold={0}
-//         ListFooterComponent={this.renderFooter}
-//       />
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     marginTop: 20,
-//     backgroundColor: '#f5fcff',
-//   },
-//   itemRow: {
-//     borderColor: '#ccc',
-//     marginBottom: 10,
-//     borderBottomWidth: 1,
-//   },
-//   itemText: {
-//     fontSize: 16,
-//     padding: 5,
-//   },
-//   itemImage: {
-//     width: '100%',
-//     height: 200,
-//     resizeMode: 'cover',
-//   },
-//   loader: {
-//     marginTop: 10,
-//     alignItems: 'center',
-//   },
-// });
-
-// export default Pagination;
-
-// import React, {Component} from 'react';
-// import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
-
-// import data from '../data/data';
-
-// class Pagination extends React.Component {
-//   state = {
-//     data: data,
-//   };
-//   render() {
-//     const data = this.state.data;
-//     return (
-//       <View style={styles.container}>
-//         <FlatList
-//           maxHeight={200}
-//           data={data}
-//           renderItem={({item}) => (
-//             <Text style={styles.item}>{item.username}</Text>
-//           )}
+//   //function to add TextInput dynamically
+//   addTextInput = index => {
+//     let textInput = this.state.textInput;
+//     textInput.push(
+//       <View>
+//         <Text>Hello</Text>
+//         <TextInput
+//           style={styles.textInput}
+//           onChangeText={text => this.addValues(text, index)}
 //         />
+//       </View>,
+//     );
+//     this.setState({textInput});
+//   };
+
+//   //function to remove TextInput dynamically
+//   removeTextInput = () => {
+//     let textInput = this.state.textInput;
+//     let inputData = this.state.inputData;
+//     textInput.pop();
+//     inputData.pop();
+//     this.setState({textInput, inputData});
+//   };
+
+//   //function to add text from TextInputs into single array
+//   addValues = (text, index) => {
+//     let dataArray = this.state.inputData;
+//     let checkBool = false;
+//     if (dataArray.length !== 0) {
+//       dataArray.forEach(element => {
+//         if (element.index === index) {
+//           element.text = text;
+//           checkBool = true;
+//         }
+//       });
+//     }
+//     if (checkBool) {
+//       this.setState({
+//         inputData: dataArray,
+//       });
+//     } else {
+//       dataArray.push({text: text, index: index});
+//       this.setState({
+//         inputData: dataArray,
+//       });
+//     }
+//   };
+
+//   //function to console the output
+//   getValues = () => {
+//     console.log('Data', this.state.inputData);
+//   };
+
+//   render() {
+//     return (
+//       <View>
+//         <View style={styles.row}>
+//           <View style={{margin: 10}}>
+//             <Button
+//               title="Add"
+//               onPress={() => this.addTextInput(this.state.textInput.length)}
+//             />
+//           </View>
+//           <View style={{margin: 10}}>
+//             <Button title="Remove" onPress={() => this.removeTextInput()} />
+//           </View>
+//         </View>
+//         {this.state.textInput.map(value => {
+//           return value;
+//         })}
+//         <Button title="Get Values" onPress={() => this.getValues()} />
 //       </View>
 //     );
 //   }
@@ -264,17 +345,132 @@ const styles = StyleSheet.create({
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     backgroundColor: '#fff',
-//     paddingTop: 15,
-//     paddingHorizontal: 15,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: 'white',
 //   },
-//   item: {
-//     textAlign: 'center',
-//     marginTop: 20,
-//     padding: 25,
-//     fontSize: 30,
-//     backgroundColor: 'steelblue',
+//   buttonView: {
+//     flexDirection: 'row',
+//   },
+//   textInput: {
+//     height: 40,
+//     borderColor: 'black',
+//     borderWidth: 1,
+//     margin: 20,
+//   },
+//   row: {
+//     flexDirection: 'row',
+//     justifyContent: 'center',
 //   },
 // });
 
-// export default Pagination;
+// export default MyClass;
+
+// import React, {Component} from 'react';
+// import {View, TextInput, Button, StyleSheet} from 'react-native';
+
+// class MyClass extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       textInput: [],
+//       inputData: [],
+//     };
+//   }
+
+//   //function to add TextInput dynamically
+//   addTextInput = index => {
+//     let textInput = this.state.textInput;
+//     textInput.push(
+//       <TextInput
+//         style={styles.textInput}
+//         onChangeText={text => this.addValues(text, index)}
+//       />,
+//     );
+//     this.setState({textInput});
+//   };
+
+//   //function to remove TextInput dynamically
+//   removeTextInput = () => {
+//     let textInput = this.state.textInput;
+//     let inputData = this.state.inputData;
+//     textInput.pop();
+//     inputData.pop();
+//     this.setState({textInput, inputData});
+//   };
+
+//   //function to add text from TextInputs into single array
+//   addValues = (text, index) => {
+//     let dataArray = this.state.inputData;
+//     let checkBool = false;
+//     if (dataArray.length !== 0) {
+//       dataArray.forEach(element => {
+//         if (element.index === index) {
+//           element.text = text;
+//           checkBool = true;
+//         }
+//       });
+//     }
+//     if (checkBool) {
+//       this.setState({
+//         inputData: dataArray,
+//       });
+//     } else {
+//       dataArray.push({text: text, index: index});
+//       this.setState({
+//         inputData: dataArray,
+//       });
+//     }
+//   };
+
+//   //function to console the output
+//   getValues = () => {
+//     console.log('Data', this.state.inputData);
+//   };
+
+//   render() {
+//     return (
+//       <View>
+//         <View style={styles.row}>
+//           <View style={{margin: 10}}>
+//             <Button
+//               title="Add"
+//               onPress={() => this.addTextInput(this.state.textInput.length)}
+//             />
+//           </View>
+//           <View style={{margin: 10}}>
+//             <Button title="Remove" onPress={() => this.removeTextInput()} />
+//           </View>
+//         </View>
+//         {this.state.textInput.map(value => {
+//           return value;
+//         })}
+//         <Button title="Get Values" onPress={() => this.getValues()} />
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: 'white',
+//   },
+//   buttonView: {
+//     flexDirection: 'row',
+//   },
+//   textInput: {
+//     height: 40,
+//     borderColor: 'black',
+//     borderWidth: 1,
+//     margin: 20,
+//   },
+//   row: {
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//   },
+// });
+
+// export default MyClass;

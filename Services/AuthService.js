@@ -107,3 +107,16 @@ export const add_consultation = (id, body) => {
       });
   });
 };
+
+export const add_report = (id, body) => {
+  return new Promise(async (resolve, reject) => {
+    return api
+      .postWithToken(`/doctor/report/create/${id}`, body)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};

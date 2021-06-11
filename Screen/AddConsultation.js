@@ -57,9 +57,6 @@ class AddConsultation extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <View style={styles.headerView}>
-          <Text style={styles.headerText}>Add Consultation</Text>
-        </View> */}
         <View style={styles.tagContainer}>
           <TagInput
             style={styles.inputtag}

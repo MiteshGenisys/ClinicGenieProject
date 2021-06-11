@@ -9,7 +9,6 @@ import Patientlist from '../Screen/Patientlist';
 import Dashboard from '../Screen/Dashboard';
 import Addpatient from '../Screen/Addpatient';
 import EditProfile from '../Screen/Editprofile';
-import Consultation from '../Screen/Consultation';
 import AddConsultation from '../Screen/AddConsultation';
 import ConsulationList from '../Screen/ConsultationList';
 import Report from '../Screen/Report';

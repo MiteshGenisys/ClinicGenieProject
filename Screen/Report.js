@@ -3,49 +3,108 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   TextInput,
+  Button,
   ScrollView,
 } from 'react-native';
 
 import Color from '../constant/Colors';
+import {add_report} from '../Services/AuthService';
 
 class Report extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      reports: [
+        {
+          report_type: '',
+          result: '',
+          description: '',
+        },
+      ],
+    };
+  }
+
+  addMorereport = () => {
+    const {reports} = this.state;
+    reports.push({
+      report_type: '',
+      result: '',
+      description: '',
+    });
+    this.setState({reports});
+  };
+
+  onChangereporttype = (text, index) => {
+    const {reports} = this.state;
+    reports[index]['report_type'] = text;
+    this.setState({reports});
+  };
+
+  result = (text, index) => {
+    const {reports} = this.state;
+    reports[index]['result'] = text;
+    this.setState({reports});
+  };
+
+  description = (text, index) => {
+    const {reports} = this.state;
+    reports[index]['description'] = text;
+    this.setState({reports});
+  };
+
+  onsubmit = () => {
+    const id = this.props.route.params.id;
+    console.log(id);
+
+    const body = {
+      reports: this.state.reports,
+    };
+    add_report(id, body)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
-      <View style={styles.reportView}>
+      <View style={styles.container}>
         <View style={styles.titleContainer}>
           <View style={styles.titleView}>
             <Text style={styles.titletext}>Report List</Text>
           </View>
-          <View style={styles.buttonView}>
-            <Button title="Add Report" onPress={this.add_consultation} />
-          </View>
         </View>
-        <ScrollView style={styles.reportContainer}>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.textInput}
-              name="email"
-              placeholder="Email report type"
-            />
-            <TextInput
-              style={styles.textInput}
-              name="email"
-              placeholder="Email Description"
-            />
-            <TextInput
-              style={styles.textInput}
-              name="email"
-              placeholder="Enter result"
-            />
-          </View>
-          <View style={styles.add_submit_button}>
+        <ScrollView>
+          {this.state.reports.map((item, index) => (
             <View>
-              <Button title="add report" />
+              <TextInput
+                name="report_type"
+                style={styles.textInput}
+                placeholder="Enter report type"
+                // defaultValue={item.report_type}
+                onChangeText={text => this.onChangereporttype(text, index)}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Enter description"
+                onChangeText={text => this.result(text, index)}
+              />
+              <TextInput
+                style={styles.textInput}
+                placeholder="Enter result"
+                onChangeText={text => this.description(text, index)}
+              />
+            </View>
+          ))}
+          <View style={styles.buttonContainer}>
+            <View>
+              <Button title="Add more" onPress={this.addMorereport} />
             </View>
             <View>
-              <Button title="submit" />
+              <Button title="submit" onPress={this.onsubmit} />
             </View>
           </View>
         </ScrollView>
@@ -55,7 +114,7 @@ class Report extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  reportView: {
+  container: {
     height: '100%',
     width: '100%',
   },
@@ -64,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     height: '10%',
-    backgroundColor: 'white',
+    backgroundColor: '#EAF2FB',
   },
   titleView: {
     marginTop: 7,
@@ -80,27 +139,19 @@ const styles = StyleSheet.create({
     margin: 7,
     marginRight: 10,
   },
-  reportContainer: {
-    // backgroundColor: 'white',
-  },
-  inputView: {
-    width: '100%',
-    alignItems: 'center',
-  },
-  add_submit_button: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
   textInput: {
     marginTop: 25,
     padding: 12,
-    width: '80%',
+    paddingLeft: 13,
+    width: '100%',
     backgroundColor: Color.textInput,
     alignItems: 'center',
     borderRadius: 5,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
   },
 });
 

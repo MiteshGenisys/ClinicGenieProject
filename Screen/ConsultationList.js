@@ -80,12 +80,16 @@ export default ConsulationList;
 
 class ConsultationCard extends React.Component {
   report = () => {
-    this.props.navigation.navigate('report');
+    const id = this.props.detail._id;
+    console.log('here is id', id);
+    this.props.navigation.navigate('report', {
+      id: id,
+    });
   };
   render() {
     const detail = this.props.detail.disease;
-    // console.log(detail);
-    // console.log('dcs', detail);
+    // const id = this.props.detail._id;
+    // console.log('here is id', id);
 
     return (
       <View style={Styles.ConsultationContainer}>
