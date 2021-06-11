@@ -60,6 +60,7 @@ class Report extends React.Component {
     const body = {
       reports: this.state.reports,
     };
+
     add_report(id, body)
       .then(res => {
         console.log(res);
